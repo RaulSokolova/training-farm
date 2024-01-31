@@ -1,13 +1,9 @@
 
 from __future__ import annotations
 
-API_KEY = "PKPVXMUY5SEZI92CVN2U"
-API_SECRET = "QpiszkVxetaOhYCPEhafggIGU6CaIV8gbmIXhaFu"
-API_BASE_URL = 'https://paper-api.alpaca.markets'
-data_url = 'wss://data.alpaca.markets'
-
 from finrl.config import INDICATORS
 
+from configurations import API_KEY, API_SECRET, API_BASE_URL, data_url
 
 from finrl.meta.env_stock_trading.env_stocktrading_np import StockTradingEnv
 from finrl.meta.env_stock_trading.env_stock_papertrading import AlpacaPaperTrading
@@ -78,7 +74,7 @@ def subtract_years_from_date(date_str, period_years):
     new_date_obj = date_obj.replace(year=date_obj.year - period_years)
     return new_date_obj.strftime("%Y-%m-%d")
 
-TRAIN_START_DATE = subtract_years_from_date("2022-01-01", period_years=period_years)
+TRAIN_START_DATE = str(subtract_years_from_date("2022-01-01", period_years=period_years))
 TRAIN_END_DATE = '2022-12-30'
 TEST_START_DATE = '2023-01-01'
 TEST_END_DATE = '2023-12-29'
