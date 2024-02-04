@@ -1,9 +1,10 @@
 # Training Farm for FinRL
+
 ## Multi-GPU enabled ElegantRL PPO training for live Stock Market data
 
-### This is not financial advice, do not use this bot on live stock markets 
+### This is not financial advice, do not use this bot on live stock markets
 
-Training farm allows to initiate multiple agent trainers leveraging multiple GPUs which allows to train on different models while testing different hyper parameters. It uses all the possbile configuration options in configurations.py  to create an index of all possible combinations. The user can select how many trainers to run at the same time based on their CPU, RAM and GPU capabilities. The main.py script will initialize the trainer.py scripts and add the arguments needed to train the agent.  
+Training farm allows to initiate multiple agent trainers leveraging multiple GPUs which allows to train on different models while testing different hyper parameters. It uses all the possbile configuration options in configurations.py to create an index of all possible combinations. The user can select how many trainers to run at the same time based on their CPU, RAM and GPU capabilities. The main.py script will initialize the trainer.py scripts and add the arguments needed to train the agent.
 
 ## Features
 
@@ -11,19 +12,20 @@ Training farm allows to initiate multiple agent trainers leveraging multiple GPU
 - You can track the performance of your training either via processes.csv or going to http://localhost:5678/dashboard
 - When the training rewards is not high enough the script will kill it and move to the next configuration combination ensuring time is not wasted on unseccessful runs.
 - Load balances training workloads between multiple Nvidia GPUs
-- Able to cache downloads and data after treatment to speed up training 
-- Keeps track of all processes via unique uids and saves the actor.pth (saved model) in folders which show the configuration parameters 
-- Uses Websockets for the trainer scripts to communicate with main.py 
-
+- Able to cache downloads and data after treatment to speed up training
+- Keeps track of all processes via unique uids and saves the actor.pth (saved model) in folders which show the configuration parameters
+- Uses Websockets for the trainer scripts to communicate with main.py
 
 ## Installation
 
 Training farm works better on Python 3.10 due to FinRL requirements. The installation instructions are based on running ubuntu 22.04 but they are also applicable to other linux distros or even MacOS (side note the Apple M1 silicone performance on training easily surpasses even an RTX 4090)
 
 Install the OS dependencies
+
 ```sh
 apt-get update && apt-get install -y wget git build-essential cmake libopenmpi-dev python3-dev zlib1g-dev libgl1-mesa-glx swig libopenblas-dev libsuitesparse-dev libgsl0-dev libfftw3-dev libglpk-dev libdsdp-dev
 ```
+
 Install Miniconda (advised to avoid conflicts with other Python environments)
 
 ```sh
@@ -32,31 +34,43 @@ wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/
 bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
 rm -rf ~/miniconda3/miniconda.sh
 ```
+
 After, if you are using linux and bash
+
 ```sh
 ~/miniconda3/bin/conda init bash
 ```
+
 After, if you are using MacOS zsh
+
 ```sh
 ~/miniconda3/bin/conda init zsh
 ```
+
 Restart your terminal and you should see a (base) in your terminal prompt. When you have it do the following
+
 ```sh
 conda create -n trainer python==3.10
 conda activate trainer
 ```
+
 Your terminal should change the prompt from (base) to (trainer). Make sure that if you type python --version, the result is 3.10 or 3.10.xx (xx can be any number)
 
 After you need to install the following dependencies
-```sh
-pip install wrds swig git+https://github.com/mikazlopes/FinRLOptimized
-```
+
+<!-- ```sh
+# pip install wrds swig git+https://github.com/mikazlopes/FinRLOptimized
+``` -->
+
 if that completes successfully your should then run
+
+<!-- git clone https://github.com/mikazlopes/training-farm.git && cd training-farm -->
+
 ```sh
-git clone https://github.com/mikazlopes/training-farm.git && cd training-farm
 pip install -r requirements.txt
 ```
-Now you should be ready to run the training. You can also use the Dockerfile to build an image with everything pre-installed. The image is built for NVIDIA CUDA enabled Docker servers. 
+
+Now you should be ready to run the training. You can also use the Dockerfile to build an image with everything pre-installed. The image is built for NVIDIA CUDA enabled Docker servers.
 
 ## Using the script
 
@@ -76,13 +90,15 @@ You can check the live performance by opening http://localhost:5678/dashboard, i
 
 ## Docker
 
-You can also use the Dockerfile to build an image with everything pre-installed. The image is built for NVIDIA CUDA enabled Docker servers. 
+You can also use the Dockerfile to build an image with everything pre-installed. The image is built for NVIDIA CUDA enabled Docker servers.
+
 ```sh
 docker build --platform linux/amd64 -f docker/Dockerfile -t training-farm .
 docker run -it --rm training-farm
 ```
+
 You will need to open port 5678 if you want to access the dashboard webpage.
 
 ## License
-MIT
 
+MIT
